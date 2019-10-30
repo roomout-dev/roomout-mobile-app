@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\LoadSceneOnClick.cs" />
+     <Compile Include="Assets\TeasureChest.cs" />
      <None Include="Assets\TreasureChest_01\LODprefab\LOD_readme.txt" />
      <None Include="Assets\StreamingAssets\Vuforia\TestAR.xml" />
  <Reference Include="Unity.Timeline.Editor">
