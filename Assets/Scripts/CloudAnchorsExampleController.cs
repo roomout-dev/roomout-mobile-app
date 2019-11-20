@@ -502,11 +502,17 @@ namespace GoogleARCore.Examples.CloudAnchors
             m_AnchorFinishedHosting = success;
             NetworkUIController.OnAnchorHosted(success, response);
 
+            // If the Cloud Anchor is resolved, display the Chest
+            GameObject.Find("LocalPlayer").GetComponent<LocalPlayerController>()
+               .SpawnTreasureChest();
+
+
             // If the Cloud Anchor is resolved, activate the Star Handler
-            if (success && !StarHandler.activeSelf)
-            {
-                StarHandler.SetActive(true);
-            }
+            // Example GameObject, disabled for now
+            // if (success && !StarHandler.activeSelf)
+            // {
+            //    StarHandler.SetActive(true);
+            // }
         }
 
         /// <summary>
@@ -568,7 +574,7 @@ namespace GoogleARCore.Examples.CloudAnchors
         /// </summary>
         private void _InstantiateStar()
         {
-            GameObject.Find("StarHandler").GetComponent<StarManipulator>().SetLastHit(m_LastHit);
+            // GameObject.Find("StarHandler").GetComponent<StarManipulator>().SetLastHit(m_LastHit);
             // Star must be spawned in the server so a networking Command is used.
             // GameObject.Find("LocalPlayer").GetComponent<LocalPlayerController>()
             //    .CmdSpawnStar(m_LastHitPose.Value.position, m_LastHitPose.Value.rotation);

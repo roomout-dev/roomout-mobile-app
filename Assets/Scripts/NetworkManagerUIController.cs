@@ -194,7 +194,7 @@ namespace GoogleARCore.Examples.CloudAnchors
         {
             if (success)
             {
-                SnackbarText.text = "Cloud Anchor successfully hosted! Tap to place more stars.";
+                SnackbarText.text = "Cloud Anchor successfully hosted! You can play!";
             }
             else
             {
@@ -212,7 +212,7 @@ namespace GoogleARCore.Examples.CloudAnchors
         {
             if (success)
             {
-                SnackbarText.text = "Cloud Anchor successfully resolved! Tap to place more stars.";
+                SnackbarText.text = "Cloud Anchor successfully resolved! You can play!";
             }
             else
             {

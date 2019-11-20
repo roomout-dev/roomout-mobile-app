@@ -20,6 +20,7 @@
 
 namespace GoogleARCore.Examples.CloudAnchors
 {
+    using GoogleARCore.Examples.ObjectManipulation;
     using UnityEngine;
     using UnityEngine.Networking;
 
@@ -31,14 +32,24 @@ namespace GoogleARCore.Examples.CloudAnchors
 #pragma warning restore 618
     {
         /// <summary>
-        /// The Star model that will represent networked objects in the scene.
+        /// The Treasure Chest that will represent networked objects in the scene.
         /// </summary>
-        public GameObject StarPrefab;
+        public GameObject TreasureChestPrefab;
+
+        /// <summary>
+        /// Manipulator prefab to attach placed objects to.
+        /// </summary>
+        public GameObject ManipulatorPrefab;
 
         /// <summary>
         /// The Anchor model that will represent the anchor in the scene.
         /// </summary>
         public GameObject AnchorPrefab;
+
+        // Handle the chest setup
+        private Vector3 ChestPosition;
+        private Quaternion ChestRotation;
+        private Transform ChestAnchor;
 
         /// <summary>
         /// The Unity OnStartLocalPlayer() method.
@@ -70,6 +81,40 @@ namespace GoogleARCore.Examples.CloudAnchors
             // instance.
 #pragma warning disable 618
             NetworkServer.Spawn(anchorObject);
+#pragma warning restore 618
+
+            // Prepare Treasure Chest informations for later spawn
+            ChestPosition = position;
+            ChestRotation = rotation;
+            ChestAnchor = (Transform) anchor;
+        }
+
+        /// <summary>
+        /// Will spawn the Treasure Chest after the Cloud Anchor is set
+        /// </summary>
+        public void SpawnTreasureChest()
+        {
+            // Spawn the treasure chest
+            // Instantiate game object at the hit pose.
+            var gameObject = Instantiate(TreasureChestPrefab, ChestPosition, ChestRotation);
+            gameObject.transform.Rotate(-90f, ChestRotation.y, -180f);
+
+            // Instantiate manipulator.
+            var manipulator =
+                Instantiate(ManipulatorPrefab, ChestPosition, ChestRotation);
+
+            // Make game object a child of the manipulator.
+            gameObject.transform.parent = manipulator.transform;
+
+            // Make manipulator a child of the anchor.
+            manipulator.transform.parent = ChestAnchor;
+
+            // Select the placed object.
+            manipulator.GetComponent<Manipulator>().Select();
+
+#pragma warning disable 618
+            // Spawn the object in all clients.
+            NetworkServer.Spawn(gameObject);
 #pragma warning restore 618
         }
 

@@ -186,6 +186,7 @@ namespace GoogleARCore.Examples.CloudAnchors
                 CmdSetCloudAnchorId(result.Anchor.CloudId);
 
                 m_CloudAnchorsExampleController.OnAnchorHosted(true, result.Response.ToString());
+                m_AnchorMesh.SetActive(false);
             });
 #endif
         }
@@ -228,7 +229,7 @@ namespace GoogleARCore.Examples.CloudAnchors
                         m_CloudAnchorsExampleController.OnAnchorResolved(
                             true, result.Response.ToString());
                         _OnResolved(result.Anchor.transform);
-                        m_AnchorMesh.SetActive(true);
+                        m_AnchorMesh.SetActive(false);
                     }));
         }
 

@@ -34,6 +34,8 @@ namespace GoogleARCore.Examples.ObjectManipulation
 
         private float m_ScaledElevation;
 
+        private bool m_tap = false;
+
         /// <summary>
         /// Should be called when the object elevation changes, to make sure that the Selection
         /// Visualization remains always at the plane level. This is the elevation that the object
@@ -122,6 +124,14 @@ namespace GoogleARCore.Examples.ObjectManipulation
         protected override void OnSelected()
         {
             SelectionVisualization.SetActive(true);
+
+            // If already selected and tapped, start an action
+            if (m_tap)
+            {
+                // 
+            }
+
+            m_tap = true;
         }
 
         /// <summary>
@@ -130,6 +140,7 @@ namespace GoogleARCore.Examples.ObjectManipulation
         protected override void OnDeselected()
         {
             SelectionVisualization.SetActive(false);
+            m_tap = false;
         }
     }
 }
