@@ -3,7 +3,10 @@ guid: 402737a5186cd48cd86798c77074db79
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - TreasureChestPrefab: {instanceID: 0}
+  - ManipulatorPrefab: {instanceID: 0}
+  - AnchorPrefab: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

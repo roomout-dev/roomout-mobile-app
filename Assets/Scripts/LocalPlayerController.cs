@@ -23,6 +23,7 @@ namespace GoogleARCore.Examples.CloudAnchors
     using GoogleARCore.Examples.ObjectManipulation;
     using UnityEngine;
     using UnityEngine.Networking;
+    using UnityEngine.UI;
 
     /// <summary>
     /// Local player controller. Handles the spawning of the networked Game Objects.
@@ -37,6 +38,11 @@ namespace GoogleARCore.Examples.CloudAnchors
         public GameObject TreasureChestPrefab;
 
         /// <summary>
+        /// The GoldenKey that will represent networked objects in the scene.
+        /// </summary>
+        public GameObject GoldenKeyPrefab;
+
+        /// <summary>
         /// Manipulator prefab to attach placed objects to.
         /// </summary>
         public GameObject ManipulatorPrefab;
@@ -45,6 +51,11 @@ namespace GoogleARCore.Examples.CloudAnchors
         /// The Anchor model that will represent the anchor in the scene.
         /// </summary>
         public GameObject AnchorPrefab;
+
+        /// <summary>
+        /// Manipulator prefab to attach the Golden Key.
+        /// </summary>
+        public GameObject ManipulatorGoldenKeyPrefab;
 
         // Handle the chest setup
         private Vector3 ChestPosition;
@@ -109,13 +120,55 @@ namespace GoogleARCore.Examples.CloudAnchors
             // Make manipulator a child of the anchor.
             manipulator.transform.parent = ChestAnchor;
 
-            // Select the placed object.
-            manipulator.GetComponent<Manipulator>().Select();
-
 #pragma warning disable 618
             // Spawn the object in all clients.
             NetworkServer.Spawn(gameObject);
 #pragma warning restore 618
+
+            // Key handling
+            Vector3 keyPosition = ChestPosition;
+            keyPosition.x += 0.5f;
+
+            // Spawn the Golden key
+            // Instantiate game object at the hit pose.
+            var goldenKey = Instantiate(GoldenKeyPrefab, keyPosition, ChestRotation);
+
+            // Instantiate manipulator.
+            var manipulatorGoldenKey = Instantiate(ManipulatorGoldenKeyPrefab, keyPosition, ChestRotation);
+
+            // Make manipulator a child of the anchor.
+            goldenKey.transform.parent = manipulatorGoldenKey.transform;
+
+#pragma warning disable 618
+            NetworkServer.Spawn(goldenKey);
+#pragma warning restore 618
+
+            // Set the GameObject to the Event listener
+            TreasureHandler treasureHandler = GameObject.Find("TreasureHandler").GetComponent<TreasureHandler>();
+            treasureHandler.SetPrefab(gameObject);
+            treasureHandler.SetGoldenKey(GoldenKeyPrefab);
+
+            // Start time management
+            StartTimer();
+        }
+
+        /// <summary>
+        /// Start the countdown
+        /// </summary>
+        public void StartTimer()
+        {
+            //var timer = Instantiate(TimerPrefab);
+
+            //// Set the text component
+            //TimerPrefab.GetComponent<TimerController>().SetText(GameObject.Find("TextTime").GetComponent<Text>());
+
+            // Start the Timer
+            GameObject.Find("TimerHandler").GetComponent<TimerController>().StartTimer();
+
+            // Spawn the GameObject timer
+//#pragma warning disable 618
+//            NetworkServer.Spawn(TimerPrefab);
+//#pragma warning restore 618
         }
 
         /// <summary>

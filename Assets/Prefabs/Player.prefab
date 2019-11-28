@@ -79,7 +79,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TreasureChestPrefab: {fileID: 1000010498622980, guid: fac60f777116d6c42905b09352422e54,
     type: 3}
+  GoldenKeyPrefab: {fileID: 170560, guid: cc5de5e674870ca479a40105f80555ad, type: 3}
   ManipulatorPrefab: {fileID: 1122865395318488, guid: cc9531905fc2dc34ea465b8694e3d2e0,
     type: 3}
   AnchorPrefab: {fileID: 1930613698465500, guid: d7e51cffc46904f65957fa3aeb255467,
+    type: 3}
+  ManipulatorGoldenKeyPrefab: {fileID: 1122865395318488, guid: 3dd15967ce42f304585a06e68064a604,
+    type: 3}
+  TimerPrefab: {fileID: 8719599405071084194, guid: a1a1990cac8331f4384bf0dca30ce4d8,
     type: 3}
