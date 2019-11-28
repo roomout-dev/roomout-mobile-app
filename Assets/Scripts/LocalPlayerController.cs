@@ -52,6 +52,8 @@ namespace GoogleARCore.Examples.CloudAnchors
         /// </summary>
         public GameObject AnchorPrefab;
 
+        public GameObject TimerPrefab;
+
         /// <summary>
         /// Manipulator prefab to attach the Golden Key.
         /// </summary>
@@ -147,9 +149,6 @@ namespace GoogleARCore.Examples.CloudAnchors
             TreasureHandler treasureHandler = GameObject.Find("TreasureHandler").GetComponent<TreasureHandler>();
             treasureHandler.SetPrefab(gameObject);
             treasureHandler.SetGoldenKey(GoldenKeyPrefab);
-
-            // Start time management
-            StartTimer();
         }
 
         /// <summary>
@@ -157,18 +156,21 @@ namespace GoogleARCore.Examples.CloudAnchors
         /// </summary>
         public void StartTimer()
         {
-            //var timer = Instantiate(TimerPrefab);
+            var timer = Instantiate(TimerPrefab);
 
-            //// Set the text component
-            //TimerPrefab.GetComponent<TimerController>().SetText(GameObject.Find("TextTime").GetComponent<Text>());
+            // GameObject timer = GameObject.Find("TimerHandler");
+            timer.SetActive(true);
+
+            // Set the text component
+            timer.GetComponent<TimerController>().SetText(GameObject.Find("TextTime").GetComponent<Text>());
 
             // Start the Timer
-            GameObject.Find("TimerHandler").GetComponent<TimerController>().StartTimer();
+            timer.GetComponent<TimerController>().StartTimer();
 
             // Spawn the GameObject timer
-//#pragma warning disable 618
-//            NetworkServer.Spawn(TimerPrefab);
-//#pragma warning restore 618
+#pragma warning disable 618
+            NetworkServer.Spawn(timer);
+#pragma warning restore 618
         }
 
         /// <summary>

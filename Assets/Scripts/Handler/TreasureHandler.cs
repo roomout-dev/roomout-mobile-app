@@ -106,8 +106,10 @@ public class TreasureHandler : MonoBehaviour
         }
         else
         {
-            WriteText("Un coffre au trésor");
+            WriteText("Un coffre au trésor !");
             playOpen = true;
+            GameObject gameState = GameObject.Find("GameState");
+            gameState.GetComponent<GameStateController>().SetGameState(1);
         }
     }
 

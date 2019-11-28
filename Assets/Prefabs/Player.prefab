@@ -84,7 +84,7 @@ MonoBehaviour:
     type: 3}
   AnchorPrefab: {fileID: 1930613698465500, guid: d7e51cffc46904f65957fa3aeb255467,
     type: 3}
-  ManipulatorGoldenKeyPrefab: {fileID: 1122865395318488, guid: 3dd15967ce42f304585a06e68064a604,
+  TimerPrefab: {fileID: 7187925438267575393, guid: a1a1990cac8331f4384bf0dca30ce4d8,
     type: 3}
-  TimerPrefab: {fileID: 8719599405071084194, guid: a1a1990cac8331f4384bf0dca30ce4d8,
+  ManipulatorGoldenKeyPrefab: {fileID: 1122865395318488, guid: 3dd15967ce42f304585a06e68064a604,
     type: 3}

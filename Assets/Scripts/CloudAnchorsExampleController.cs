@@ -506,6 +506,8 @@ namespace GoogleARCore.Examples.CloudAnchors
             GameObject.Find("LocalPlayer").GetComponent<LocalPlayerController>()
                .SpawnTreasureChest();
 
+            GameObject.Find("LocalPlayer").GetComponent<LocalPlayerController>()
+                .StartTimer();
 
             // If the Cloud Anchor is resolved, activate the Star Handler
             // Example GameObject, disabled for now

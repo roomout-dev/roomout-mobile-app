@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 #pragma warning disable 618
-public class TimerController : MonoBehaviour
+public class TimerController : NetworkBehaviour
 #pragma warning restore 618
 {
     /// <summary>
@@ -15,10 +16,20 @@ public class TimerController : MonoBehaviour
     public bool canPlay { get; private set; }
 
     /// <summary>
+    /// The total time as the game started
+    /// </summary>
+    public float startingTime;
+
+    /// <summary>
     /// In seconds, time left
     /// </summary>
-    public float time;
+#pragma warning disable 618
+    [SyncVar] public float time;
+#pragma warning restore 618
 
+#pragma warning disable 618
+    [SyncVar] public int gameState;
+#pragma warning restore 618
     /// <summary>
     /// For displaying in the text component
     /// </summary>
@@ -29,16 +40,39 @@ public class TimerController : MonoBehaviour
     {
     }
 
+    public override void OnStartClient()
+    {
+        timerText = GameObject.Find("TextTime").GetComponent<Text>();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        TimeSpan t = TimeSpan.FromSeconds(time);
+        // Check GameState
+        int currentGameState = GameObject.Find("GameState").GetComponent<GameStateController>().GetGameState();
+
+        // Game State Handling
+        if (currentGameState == 1)
+        {
+            GameObject.Find("GameState").GetComponent<GameStateController>().HandleState(1, time);
+            canPlay = false;
+            gameState = 1;
+        }
+
+        // Time Handling
+        TimeSpan t = TimeSpan.FromSeconds((int)time);
         timerText.text = t.ToString();
 
         if (canPlay)
         {
             time -= Time.deltaTime;
-            GetComponent<TimerNetwork>().CmdSetTimer(time);
+        }
+
+        if (time < 0)
+        {
+            canPlay = false;
+            gameState = -1;
+            GameObject.Find("GameState").GetComponent<GameStateController>().HandleState(-1, 0);
         }
     }
 
